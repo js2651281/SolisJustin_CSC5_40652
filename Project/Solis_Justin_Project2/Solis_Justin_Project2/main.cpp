@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
 void game(){
     // Initialize variables.
     static int DECK = 15;
-    int card[DECK] = {1, 2, 3, 4, 5, 6, 7, 8, 9 , 10, 11, 12, 13, 14, 15}, input, 
+    int card[DECK], input, 
             count = 0, timesHit = 3;
     float pHand, dHand;
     bool play = true;
@@ -73,7 +73,7 @@ void game(){
     dHand = card[14]+card[15];
         
     cout<<"Your hand: "<<card[0]<<" "<<card[1]<<" = "<<pHand<<endl;
-    cout<<"Dealers hand: "<<card[14]<<" "<<"and x."<<endl;
+    cout<<"Dealer's hand: "<<card[14]<<" "<<"and x."<<endl;
     
     // Checks if player's hand starts at 21/above 21.
     if(pHand==21 && dHand<pHand){
@@ -106,7 +106,7 @@ void game(){
                     pHand += card[i];
                     cout<<"New card: "<<card[i]<<endl;
                     cout<<"Your hand: "<<pHand<<endl;
-                    cout<<"Dealers hand: "<<card[14]<<" "<<"and x."<<endl<<endl;
+                    cout<<"Dealer's hand: "<<card[14]<<" "<<"and x."<<endl<<endl;
                     count++;
                     }
                     //------------------------------//
@@ -124,7 +124,7 @@ void game(){
                         win(pHand, dHand, card, DECK, count);
                         play=false;
                     }
-                    if(pHand ==21 && dHand>21){
+                    if(pHand==21 && dHand>21){
                         win(pHand, dHand, card, DECK, count);
                         play=false;
                     }
@@ -146,7 +146,9 @@ void game(){
                 }
             }
         }
-        
+        //------------------------------//
+        //--------Win conditions--------//
+        //------------------------------//
         else if(input==2 && pHand<=21 && dHand<pHand){
             win(pHand, dHand, card, DECK, count);
             play=false;
@@ -155,6 +157,9 @@ void game(){
             win(pHand, dHand, card, DECK, count);
             play=false;
         }
+        //-------------------------------//
+        //--------Lose conditions--------//
+        //-------------------------------//
         else if(input==2 && pHand<dHand && dHand<21){
             lose(pHand, dHand, card, DECK, count);
             play=false;
@@ -176,7 +181,7 @@ void game(){
 //-Controls Shuffling-//
 //--------------------//
 int shuffle(int card[], int DECK){
-    // Random number seed and deck.
+    // Random number seed.
     srand(static_cast<unsigned int>(time(0)));
     
     // Set the cards as random, make card>10=10.
@@ -202,7 +207,7 @@ int win(int pHand, int dHand, int card[], int &DECK, int count){
     string win = "You win!";
     count += 2;
     
-    //Output users hand
+    //Output user's hand
     if(count<=3){
         cout<<left<<setw(15)<<"Your cards: ";
         outputFile<<left<<setw(15)<<"Your cards: ";
@@ -212,6 +217,8 @@ int win(int pHand, int dHand, int card[], int &DECK, int count){
         }
         cout<<" = "<<pHand;
         cout<<endl;
+        outputFile<<" = "<<pHand;
+        outputFile<<endl;
     }
     
     if(count>3){
@@ -219,11 +226,11 @@ int win(int pHand, int dHand, int card[], int &DECK, int count){
         outputFile<<setw(15)<<"Your hand = "<<pHand<<endl;
     }
     
-    //Output dealers hand
-        cout<<left<<setw(15)<<"Dealers cards: "<<card[14]<<" "<<card[15]<<
+    //Output dealer's hand
+        cout<<left<<setw(15)<<"Dealer's cards: "<<card[14]<<" "<<card[15]<<
                 " = "<<dHand<<endl;
         cout<<endl<<win;
-        outputFile<<left<<setw(15)<<"Dealers cards: "<<card[14]<<" "<<card[15]<<
+        outputFile<<left<<setw(15)<<"Dealer's cards: "<<card[14]<<" "<<card[15]<<
                 " = "<<dHand<<endl;
         outputFile<<endl<<win;
         outputFile.close();
@@ -251,6 +258,8 @@ int lose(int pHand, int dHand, int card[], int &DECK, int count){
             }
         cout<<" = "<<pHand;
         cout<<endl;
+        outputFile<<" = "<<pHand;
+        outputFile<<endl;
         }
     
     if(count>3){
@@ -258,13 +267,13 @@ int lose(int pHand, int dHand, int card[], int &DECK, int count){
         outputFile<<left<<setw(15)<<"Your hand = "<<pHand<<endl;
     }
     
-    //Output dealers hand
-        cout<<left<<setw(15)<<"Dealers cards: "<<card[14]<<" "<<card[15]<<
+    //Output dealer's hand
+        cout<<left<<setw(15)<<"Dealer's cards: "<<card[14]<<" "<<card[15]<<
                 " = "<<dHand<<endl;
         cout<<endl<<lose;
         outputFile<<" = "<<pHand;
         outputFile<<endl;
-        outputFile<<left<<setw(15)<<"Dealers cards: "<<card[14]<<" "<<card[15]<<
+        outputFile<<left<<setw(15)<<"Dealer's cards: "<<card[14]<<" "<<card[15]<<
                 " = "<<dHand<<endl;
         outputFile<<lose;
         outputFile.close();

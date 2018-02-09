@@ -1,3 +1,0 @@
-Your cards:    10 3 10  = 23
-Dealers cards: 10 1 = 11
-You lose. =[
